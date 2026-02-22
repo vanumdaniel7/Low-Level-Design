@@ -1,4 +1,4 @@
-package patterns.strategy;
+package lld.patterns.strategy;
 
 public class FlyWithWings implements FlyBehavior {
     @Override
