@@ -12,6 +12,8 @@ build/
 *.iws
 *.iml
 *.ipr
+.idea/awsToolkit.xml
+.idea/aws.xml
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
