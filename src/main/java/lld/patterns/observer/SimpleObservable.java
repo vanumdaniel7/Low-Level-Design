@@ -1,10 +1,11 @@
 package lld.patterns.observer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleObservable<T> implements Observable<T> {
 
-    private List<Observer<T>> observers;
+    private final List<Observer<T>> observers = new ArrayList<>();
 
     @Override
     public void subscribe(Observer<T> observer) {
@@ -18,9 +19,7 @@ public class SimpleObservable<T> implements Observable<T> {
 
     @Override
     public void notifyObservers(T t) {
-        observers.forEach(observer -> {
-            observer.onValueUpdated(t);
-        });
+        observers.forEach(observer -> observer.onValueUpdated(t));
     }
 
     public void setData(T t) {
@@ -28,7 +27,7 @@ public class SimpleObservable<T> implements Observable<T> {
     }
 
     public static void main(String[] args) {
-        SimpleObservable<FitnessData> fitnessDataNotifier = new SimpleObservable<FitnessData>();
+        SimpleObservable<FitnessData> fitnessDataNotifier = new SimpleObservable<>();
         LiveActivityDisplay liveActivityDisplay = new LiveActivityDisplay();
 
         fitnessDataNotifier.subscribe(liveActivityDisplay);
