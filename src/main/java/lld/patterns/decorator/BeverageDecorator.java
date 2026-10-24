@@ -1,6 +1,6 @@
 package lld.patterns.decorator;
 
-public class BeverageDecorator implements Beverage {
+public abstract class BeverageDecorator implements Beverage {
     private Beverage beverage;
     public BeverageDecorator(Beverage beverage) {
         this.beverage = beverage;

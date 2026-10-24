@@ -1,4 +1,4 @@
-package lld.examples;
+package lld.examples.singleton;
 
 import java.time.Instant;
 import java.util.concurrent.ConcurrentHashMap;
