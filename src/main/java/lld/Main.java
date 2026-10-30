@@ -1,23 +1,25 @@
 package lld;
 
+import lld.patterns.chainofresponsibility.*;
 import lld.patterns.decorator.HouseBlend;
 import lld.patterns.decorator.Latte;
 import lld.patterns.decorator.Mocha;
 import lld.patterns.decorator.Beverage;
 
 public class Main {
-    public static void main(String[] args) {
+    static void main(String[] args) {
+        AbstractRequestHandler auth = new AuthenticationRequestHandler();
+        AbstractRequestHandler authorization = new AuthorizationRequestHandler();
+        AbstractRequestHandler rateLimit = new RateLimitRequestHandler();
 
-        Beverage houseBlend = new HouseBlend();
-        Beverage houseBlendWithLatte = new Latte(houseBlend);
-        Beverage houseBlendWithLatteAndMocha = new Mocha(houseBlendWithLatte);
+        auth.setNext(authorization);
+        authorization.setNext(rateLimit);
 
-        System.out.println(houseBlend.getCost());
-        System.out.println(houseBlendWithLatte.getCost());
-        System.out.println(houseBlendWithLatteAndMocha.getCost());
+        Request goodRequest = new Request("john", "ADMIN", 10, "{ \"data\": \"valid\" }");
+        auth.handle(goodRequest);
 
-        System.out.println(houseBlend.getDescription());
-        System.out.println(houseBlendWithLatte.getDescription());
-        System.out.println(houseBlendWithLatteAndMocha.getDescription());
+        System.out.println("\n--- Trying an invalid request ---");
+        Request badRequest = new Request(null, "USER", 150, "");
+        auth.handle(badRequest);
     }
 }
